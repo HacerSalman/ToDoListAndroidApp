@@ -7,44 +7,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainMenuFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainMenuFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @BindView(R.id.listView_main_menu) ListView listView;
 
     public MainMenuFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MainMenuFragmentFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MainMenuFragment newInstance(String param1, String param2) {
         MainMenuFragment fragment = new MainMenuFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,8 +36,6 @@ public class MainMenuFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -63,12 +44,42 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         ButterKnife.bind(this,view);
-        // Inflate the layout for this fragment
+        setListView();
         return view;
     }
 
-    @OnClick(R.id.button2) void replace() {
+    void setListView() {
+
+        // Array of strings...
+        String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
+                "WebOS","Ubuntu","Windows7","Max OS X"};
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < mobileArray.length; ++i) {
+            list.add(mobileArray[i]);
+        }
+        ArrayAdapter adapter = new ArrayAdapter<String>(getContext(),
+                R.layout.listview_layout, list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                view.animate().setDuration(2000).alpha(0)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                replaceFragment();
+                                adapter.notifyDataSetChanged();
+                                view.setAlpha(1);
+                            }
+                        });
+                }
+        });
+    }
+
+    void replaceFragment() {
         Bundle args = new Bundle();
-        ((MainActivity) getActivity()).ReplaceFragment(new ManageListFragment(), args);
+        ((MainActivity) getActivity()).ReplaceFragment(new ManageListFragment(), args,"ManageListFragment");
     }
 }

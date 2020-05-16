@@ -24,13 +24,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void ReplaceFragment(Fragment fragment, Bundle args)
+    public void ReplaceFragment(Fragment fragment, Bundle args, String fragmentKey)
     {
         fragment.setArguments(args);
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(fragmentKey);
         transaction.commit();
     }
 }
