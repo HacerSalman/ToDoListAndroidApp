@@ -2,7 +2,8 @@ package com.example.todolistandroidapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SignUpRequestModel {
+public class SignUpResponseModel {
+
     @SerializedName("user_name")
     private String username;
     @SerializedName("full_name")
@@ -10,7 +11,7 @@ public class SignUpRequestModel {
     @SerializedName("password")
     private String password;
 
-    public SignUpRequestModel(String username, String fullname, String password) {
+    public SignUpResponseModel(String username, String fullname, String password) {
         this.fullname = fullname;
         this.password = password;
         this.username = username;
