@@ -4,7 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.example.todolistandroidapp.Model.AuthModel;
+import com.example.todolistandroidapp.Model.ListRequestModel;
+import com.example.todolistandroidapp.Model.ListResponseModel;
+import com.example.todolistandroidapp.Network.GetDataService;
+import com.example.todolistandroidapp.Network.RetrofitClientInstance;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,4 +47,5 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(fragmentKey);
         transaction.commit();
     }
+
 }
