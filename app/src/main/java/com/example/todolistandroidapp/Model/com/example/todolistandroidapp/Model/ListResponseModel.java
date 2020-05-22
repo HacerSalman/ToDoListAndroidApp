@@ -7,17 +7,17 @@ import java.util.List;
 
 public class ListResponseModel {
     @SerializedName("list")
-    private List<ListData> list;
+    private ArrayList<ListData> list;
     @SerializedName("user_id")
     private long userId;
     @SerializedName("message")
-    private String Message;
+    private String message;
 
-    public List<ListData> getList() {
+    public ArrayList<ListData> getList() {
         return list;
     }
 
-    public void setList(List<ListData> list) {
+    public void setList(ArrayList<ListData> list) {
         this.list = list;
     }
 
@@ -30,11 +30,11 @@ public class ListResponseModel {
     }
 
     public String getMessage() {
-        return Message;
+        return message;
     }
 
     public void setMessage(String message) {
-        Message = message;
+        this.message = message;
     }
 
 

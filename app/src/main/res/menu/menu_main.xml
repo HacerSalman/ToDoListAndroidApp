@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_item"
+        android:title="@string/main_menu_add" />
+
+    <item
+        android:id="@+id/profile_item"
+        android:title="@string/main_menu_profile" />
+
+    <item
+        android:id="@+id/list_type_item"
+        android:title="@string/main_menu_list_type" />
+
+    <item
+        android:id="@+id/logout_item"
+        android:title="@string/main_menu_logout" />
+</menu>

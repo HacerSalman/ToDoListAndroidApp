@@ -9,6 +9,9 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,8 +19,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.todolistandroidapp.Adapter.UserListAdapter;
 import com.example.todolistandroidapp.Model.AuthModel;
+import com.example.todolistandroidapp.Model.BaseResponse;
 import com.example.todolistandroidapp.Model.ListData;
+import com.example.todolistandroidapp.Model.ListRequestModel;
 import com.example.todolistandroidapp.Model.ListResponseModel;
 import com.example.todolistandroidapp.Network.GetDataService;
 import com.example.todolistandroidapp.Network.RetrofitClientInstance;
@@ -56,7 +62,9 @@ public class MainMenuFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+        setHasOptionsMenu(true);
         pref = this.getActivity().getSharedPreferences("ToDoListPref", Context.MODE_PRIVATE);
+        authModel = new AuthModel();
     }
 
     @Override
@@ -68,25 +76,20 @@ public class MainMenuFragment extends Fragment {
         return view;
     }
 
-    void setListView(List<ListData> list) {
+    void setListView(ArrayList<ListData> list) {
 
-        ArrayList<String> titleList = new ArrayList<String>();
-        for (ListData o:list) {
-            titleList.add(o.getTitle());
-        }
-        ArrayAdapter adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.listview_layout, titleList);
+        UserListAdapter adapter = new UserListAdapter(getContext(),list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
+                final ListData item = (ListData) parent.getItemAtPosition(position);
                 view.animate().setDuration(2000).alpha(0)
                         .withEndAction(new Runnable() {
                             @Override
                             public void run() {
-                                replaceFragment();
+                                replaceFragment(item);
                                 adapter.notifyDataSetChanged();
                                 view.setAlpha(1);
                             }
@@ -95,8 +98,9 @@ public class MainMenuFragment extends Fragment {
         });
     }
 
-    void replaceFragment() {
+    void replaceFragment(ListData listData) {
         Bundle args = new Bundle();
+        args.putSerializable("listData",listData);
         ((MainActivity) getActivity()).ReplaceFragment(new ManageListFragment(), args,"ManageListFragment");
     }
 
@@ -109,8 +113,7 @@ public class MainMenuFragment extends Fragment {
             return;
         }
 
-        authModel = new AuthModel();
-        authModel.setToken(token);
+        AuthModel.token = token;
 
         //Show progress dialog
         SweetAlertDialog pDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
@@ -121,7 +124,7 @@ public class MainMenuFragment extends Fragment {
 
         //Call get user list api
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<ListResponseModel> call = service.getUserList(authModel.getToken());
+        Call<ListResponseModel> call = service.getUserList(AuthModel.token);
         call.enqueue(new Callback<ListResponseModel>() {
             @Override
             public void onResponse(Call<ListResponseModel> call, Response<ListResponseModel> response) {
@@ -159,5 +162,54 @@ public class MainMenuFragment extends Fragment {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.add_item:
+               addList();
+                return true;
+            case R.id.profile_item:
+                profile();
+                return true;
+            case R.id.logout_item:
+                logout();
+                return true;
+            case R.id.list_type_item:
+                getListType();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //Call add list api method
+    void addList(){
+        replaceFragment(null);
+    }
+
+    void profile(){
+        Bundle args = new Bundle();
+        ((MainActivity) getActivity()).ReplaceFragment(new ProfileFragment(), args,"ProfileFragment");
+    }
+
+    void logout(){
+
+        //Start login activity
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+    }
+
+    void getListType(){
+        Bundle args = new Bundle();
+        ((MainActivity) getActivity()).ReplaceFragment(new ListTypeFragment(), args,"ListTypeFragment");
     }
 }

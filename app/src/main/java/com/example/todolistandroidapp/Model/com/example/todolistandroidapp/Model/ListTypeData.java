@@ -2,30 +2,16 @@ package com.example.todolistandroidapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class ListData implements Serializable {
+public class ListTypeData {
 
     @SerializedName("id")
-    private long listId;
+    private int listTypeId;
 
-    @SerializedName("title")
-    private String title;
+    @SerializedName("name")
+    private String name;
 
     @SerializedName("description")
     private String Description;
-
-    @SerializedName("startsAt")
-    private long startsAt;
-
-    @SerializedName("endsAt")
-    private long endsAt;
-
-    @SerializedName("type")
-    private int type;
-
-    @SerializedName("priority")
-    private Byte priority;
 
     @SerializedName("createdDate")
     private long createdDate;
@@ -42,32 +28,20 @@ public class ListData implements Serializable {
     @SerializedName("status")
     private Byte status;
 
-    @SerializedName("type_name")
-    private String typeName;
-
-    public String getTypeName() {
-        return typeName;
+    public int getListTypeId() {
+        return listTypeId;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setListTypeId(int listTypeId) {
+        this.listTypeId = listTypeId;
     }
 
-
-    public long getListId() {
-        return listId;
+    public String getName() {
+        return name;
     }
 
-    public void setListId(long listId) {
-        this.listId = listId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -76,38 +50,6 @@ public class ListData implements Serializable {
 
     public void setDescription(String description) {
         Description = description;
-    }
-
-    public long getStartsAt() {
-        return startsAt;
-    }
-
-    public void setStartsAt(long startsAt) {
-        this.startsAt = startsAt;
-    }
-
-    public long getEndsAt() {
-        return endsAt;
-    }
-
-    public void setEndsAt(long endsAt) {
-        this.endsAt = endsAt;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public Byte getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Byte priority) {
-        this.priority = priority;
     }
 
     public long getCreatedDate() {
@@ -149,5 +91,4 @@ public class ListData implements Serializable {
     public void setStatus(Byte status) {
         this.status = status;
     }
-
 }

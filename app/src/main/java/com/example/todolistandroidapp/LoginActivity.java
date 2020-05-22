@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
     SharedPreferences pref;
     SharedPreferences.Editor editor;
-    AuthModel authModel;
 
     @BindView(R.id.edittxt_login_username) EditText editTextUsername;
     @BindView(R.id.edittxt_login_password) EditText editTextPassword;
@@ -80,10 +80,10 @@ public class LoginActivity extends AppCompatActivity {
                 else if(response.body() != null){
 
                     editor.putString("token", response.body().getToken()); // Storing token
-                    editor.commit(); // commit changes
+                    editor.commit(); // commit change
 
-                    authModel = new AuthModel();
-                    authModel.setToken(response.body().getToken());
+                    AuthModel.token =  response.body().getToken();
+                    AuthModel.userName = response.body().getUsername();
 
                     //Go to main activity
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -103,5 +103,10 @@ public class LoginActivity extends AppCompatActivity {
         //Go to sign up activity
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
+    }
+
+
+    @Override
+    public void onBackPressed() {
     }
 }

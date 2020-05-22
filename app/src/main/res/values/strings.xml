@@ -29,6 +29,17 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
+    <!-- Manage menu item -->
+    <string name="manage_menu_save">Kaydet</string>
+    <string name="manage_menu_delete">Sil</string>
+    <string name="manage_menu_add_type">Kategori Değiştir</string>
+
+    <!-- Main menu item -->
+    <string name="main_menu_add">Ekle</string>
+    <string name="main_menu_profile">Profilim</string>
+    <string name="main_menu_logout">Çıkış Yap</string>
+    <string name="main_menu_list_type">Görevler Listesi</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
