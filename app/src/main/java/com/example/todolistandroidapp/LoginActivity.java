@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     AuthModel.token =  response.body().getToken();
                     AuthModel.userName = response.body().getUsername();
+                    AuthModel.userId = response.body().getUserId();
 
                     //Go to main activity
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

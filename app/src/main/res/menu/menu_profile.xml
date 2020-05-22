@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/update_profile"
+        android:title="@string/profile_menu_save" />
+
+    <item
+        android:id="@+id/logout_profile"
+        android:title="@string/profile_menu_logout" />
+
+    <item
+        android:id="@+id/delete_profile"
+        android:title="@string/profile_menu_delete" />
+</menu>
+
