@@ -1,11 +1,13 @@
 package com.example.todolistandroidapp;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -65,6 +67,7 @@ public class MainMenuFragment extends Fragment {
         setHasOptionsMenu(true);
         pref = this.getActivity().getSharedPreferences("ToDoListPref", Context.MODE_PRIVATE);
         authModel = new AuthModel();
+
     }
 
     @Override
@@ -72,6 +75,8 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         ButterKnife.bind(this,view);
+        //Change action bar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Kullanıcı listeleri");
         getUserList();
         return view;
     }

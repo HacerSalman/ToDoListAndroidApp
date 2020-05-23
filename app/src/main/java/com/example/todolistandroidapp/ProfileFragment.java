@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -68,6 +69,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this,view);
+        //Change action bar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profilim");
         getProfileInfo();
         return  view;
     }

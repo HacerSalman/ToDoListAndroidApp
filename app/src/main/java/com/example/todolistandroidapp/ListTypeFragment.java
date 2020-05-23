@@ -2,6 +2,7 @@ package com.example.todolistandroidapp;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -31,6 +32,10 @@ public class ListTypeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_list_type, container, false);
+
+        //Change action bar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Liste Çeşitleri");
+
         return view;
     }
 }

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
-        android:hint="Title "
+        android:hint="Görev"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:hint="Description"
+        android:hint="Görev Açıklaması"
         android:textSize="20sp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,28 +35,17 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_manageList_title" />
 
     <ImageButton
-        android:id="@+id/imageButton_manageList_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_menu_delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_manageList_type" />
-
-    <ImageButton
         android:id="@+id/imageButton_manageList_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="60dp"
         android:background="@null"
         android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_menu_save"
+        android:src="@drawable/save"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_manageList_type" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_manageList_type"
+        app:layout_constraintVertical_bias="0.47" />
 
     <Spinner
         android:id="@+id/spinner_manageList_type"
@@ -66,11 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_manageList_desc"
         android:padding="10dip"
-        style="?android:attr/dropDownItemStyle"
-        android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
-        android:singleLine="true"
-        android:textSize="20sp"
-        android:textAlignment="center"/>
+        android:singleLine="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

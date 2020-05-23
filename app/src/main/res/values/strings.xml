@@ -38,7 +38,7 @@
     <string name="main_menu_add">Ekle</string>
     <string name="main_menu_profile">Profilim</string>
     <string name="main_menu_logout">Çıkış Yap</string>
-    <string name="main_menu_list_type">Görevler Listesi</string>
+    <string name="main_menu_list_type">Liste Çeşitleri</string>
 
     <!-- Profile menu item -->
     <string name="profile_menu_save">Kaydet</string>

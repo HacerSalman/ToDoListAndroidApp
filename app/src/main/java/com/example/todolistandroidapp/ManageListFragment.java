@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -51,8 +52,6 @@ public class ManageListFragment extends Fragment {
     EditText title;
     @BindView(R.id.editText_manageList_desc)
     EditText desc;
-    @BindView(R.id.imageButton_manageList_delete)
-    ImageButton delete;
     @BindView(R.id.imageButton_manageList_save)
     ImageButton save;
     @BindView(R.id.spinner_manageList_type)
@@ -88,6 +87,9 @@ public class ManageListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_manage_list, container, false);
 
+        //Change action bar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Görev");
+
         //Bind butterknife
         ButterKnife.bind(this,view);
 
@@ -106,11 +108,6 @@ public class ManageListFragment extends Fragment {
         return view;
     }
 
-    //Click delete button
-    @OnClick(R.id.imageButton_manageList_delete) void delete() {
-        //Call delete list api method
-        deleteeListData();
-    }
 
     //Click save button
     @OnClick(R.id.imageButton_manageList_save) void save() {
@@ -315,7 +312,7 @@ public class ManageListFragment extends Fragment {
                     }
 
                     // Creating adapter for spinner
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_layout, list);
                     // Drop down layout style - list view with radio button
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     // attaching data adapter to spinner
