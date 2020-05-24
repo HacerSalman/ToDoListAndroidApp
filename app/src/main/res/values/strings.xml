@@ -45,6 +45,9 @@
     <string name="profile_menu_logout">Çıkış Yap</string>
     <string name="profile_menu_delete">Hesabımı Sil</string>
 
+    <!-- menu list type -->
+    <string name="list_type_menu_add">Ekle</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

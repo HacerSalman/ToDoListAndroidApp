@@ -1,3 +1,3 @@
 package com.example.todolistandroidapp.Model;
-public class ListTypeRequestModel {
+public class ListTypeRequestModel extends  ListTypeData{
 }

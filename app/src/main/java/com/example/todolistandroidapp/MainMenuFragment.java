@@ -44,7 +44,6 @@ import retrofit2.Response;
 public class MainMenuFragment extends Fragment {
 
     SharedPreferences pref;
-    AuthModel authModel;
 
     @BindView(R.id.listView_main_menu) ListView listView;
 
@@ -66,7 +65,6 @@ public class MainMenuFragment extends Fragment {
         }
         setHasOptionsMenu(true);
         pref = this.getActivity().getSharedPreferences("ToDoListPref", Context.MODE_PRIVATE);
-        authModel = new AuthModel();
 
     }
 

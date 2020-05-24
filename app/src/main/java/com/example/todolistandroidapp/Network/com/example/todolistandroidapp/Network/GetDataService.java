@@ -84,6 +84,10 @@ public interface GetDataService {
     @DELETE("/ListType/DeleteListType")
     Call<BaseResponse> deleteListType(@Header("Authorization") String credentials,
                                       @Query("typeId") long typeId);
+
+    @POST("/ListType/AddListType")
+    Call<BaseResponse> addListType(@Header("Authorization") String credentials,
+                                      @Body ListTypeRequestModel requestModel);
     //endregion
 
 }
