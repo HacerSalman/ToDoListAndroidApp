@@ -1,6 +1,7 @@
 package com.example.todolistandroidapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -34,6 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProfileFragment extends Fragment {
 
 
@@ -45,6 +48,9 @@ public class ProfileFragment extends Fragment {
     EditText fullName;
     @BindView(R.id.imageButton_profile_save)
     ImageButton save;
+
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -61,6 +67,8 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        pref = getActivity().getSharedPreferences("ToDoListPref", MODE_PRIVATE);
+        editor = pref.edit();
     }
 
     @Override
@@ -215,6 +223,13 @@ public class ProfileFragment extends Fragment {
     }
 
     void logout(){
+
+        editor.putString("token", ""); // Storing token
+        editor.commit(); // commit change
+
+        AuthModel.token =  "";
+        AuthModel.userName = "";
+        AuthModel.userId = 0;
         //Start login activity
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);

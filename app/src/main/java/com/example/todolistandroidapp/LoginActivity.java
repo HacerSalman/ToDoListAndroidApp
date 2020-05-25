@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.todolistandroidapp.Helper.Utils;
 import com.example.todolistandroidapp.Model.AuthModel;
 import com.example.todolistandroidapp.Model.ListResponseModel;
 import com.example.todolistandroidapp.Model.UserResponseModel;
@@ -41,10 +42,20 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         pref = this.getSharedPreferences("ToDoListPref", MODE_PRIVATE);
         editor = pref.edit();
+        //Clear textbox
+        editTextUsername.setText("");
+        editTextPassword.setText("");
     }
 
     @OnClick(R.id.btn_login) void login() {
-
+        //Check internet connection
+        if(!Utils.isNetworkConnected(LoginActivity.this)){
+            new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Bağlantı hatası")
+                    .setContentText("İnternet bağlantısı yok, lütfen telefonunuzun aktif bir internet bağlantısı olduğunu kontrol ediniz")
+                    .show();
+            return;
+        }
         //Check username and password
         if(editTextUsername.getText().toString().trim().isEmpty() || editTextPassword.getText().toString().trim().isEmpty() ){
             new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)

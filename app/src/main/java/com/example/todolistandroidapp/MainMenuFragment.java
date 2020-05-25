@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.todolistandroidapp.Adapter.UserListAdapter;
+import com.example.todolistandroidapp.Helper.Utils;
 import com.example.todolistandroidapp.Model.AuthModel;
 import com.example.todolistandroidapp.Model.BaseResponse;
 import com.example.todolistandroidapp.Model.ListData;
@@ -40,10 +41,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class MainMenuFragment extends Fragment {
 
     SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     @BindView(R.id.listView_main_menu) ListView listView;
 
@@ -65,6 +69,7 @@ public class MainMenuFragment extends Fragment {
         }
         setHasOptionsMenu(true);
         pref = this.getActivity().getSharedPreferences("ToDoListPref", Context.MODE_PRIVATE);
+        editor = pref.edit();
 
     }
 
@@ -75,8 +80,20 @@ public class MainMenuFragment extends Fragment {
         ButterKnife.bind(this,view);
         //Change action bar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Kullanıcı listeleri");
+        checkInternetConnection();
         getUserList();
         return view;
+    }
+
+    void checkInternetConnection(){
+        //Check internet connection
+        if(!Utils.isNetworkConnected(getContext())){
+            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Bağlantı hatası")
+                    .setContentText("İnternet bağlantısı yok, lütfen telefonunuzun aktif bir internet bağlantısı olduğunu kontrol ediniz")
+                    .show();
+            return;
+        }
     }
 
     void setListView(ArrayList<ListData> list) {
@@ -205,7 +222,12 @@ public class MainMenuFragment extends Fragment {
     }
 
     void logout(){
+        editor.putString("token", ""); // Storing token
+        editor.commit(); // commit change
 
+        AuthModel.token =  "";
+        AuthModel.userName = "";
+        AuthModel.userId = 0;
         //Start login activity
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);

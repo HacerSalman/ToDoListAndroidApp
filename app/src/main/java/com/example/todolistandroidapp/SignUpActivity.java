@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.todolistandroidapp.Helper.AlertDialogUtils;
+import com.example.todolistandroidapp.Helper.Utils;
 import com.example.todolistandroidapp.Model.SignUpRequestModel;
 import com.example.todolistandroidapp.Model.SignUpResponseModel;
 import com.example.todolistandroidapp.Network.GetDataService;
@@ -43,6 +44,16 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_sign_up_ok) void SignUp() {
+
+        //Check internet connection
+        if(!Utils.isNetworkConnected(SignUpActivity.this)){
+            new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Bağlantı hatası")
+                    .setContentText("İnternet bağlantısı yok, lütfen telefonunuzun aktif bir internet bağlantısı olduğunu kontrol ediniz")
+                    .show();
+            return;
+        }
+
         //Check password
         if(!editTextPassword.getText().toString().trim().equals(editTextRePassword.getText().toString().trim())){
             new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
