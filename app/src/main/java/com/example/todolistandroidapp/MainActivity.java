@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
             MainMenuFragment mainMenuFragmentFragment = new MainMenuFragment();
             mainMenuFragmentFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment, mainMenuFragmentFragment).commit();
+                    .add(R.id.fragment, mainMenuFragmentFragment).
+                    addToBackStack("MainMenuFragment").commit();
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -19,6 +20,8 @@ import com.example.todolistandroidapp.R;
 import com.example.todolistandroidapp.Service.ListTypeService;
 
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ListTypeAdapter extends RecyclerView.Adapter<ListTypeAdapter.ViewHolder> {
 
@@ -53,33 +56,52 @@ public class ListTypeAdapter extends RecyclerView.Adapter<ListTypeAdapter.ViewHo
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //Show edit popup
-                AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
-                final EditText edittext = new EditText(context);
-                edittext.setText(data.getName());
-                final EditText edittextDesc = new EditText(context);
-                edittextDesc.setText(data.getDescription());
+              //Show edit popup
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                final EditText editTextName = new EditText(context);
+                editTextName.setText(data.getName());
+                final EditText editTextDesc = new EditText(context);
+                editTextDesc.setText(data.getDescription());
+                LinearLayout linearLayout = new LinearLayout(context);
+                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                linearLayout.setLayoutParams(params);
+                linearLayout.addView(editTextName);
+                linearLayout.addView(editTextDesc);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
                 alert.setTitle("Listeyi düzenle");
-                //TODO:
-                alert.setView(edittext);
-                alert.setView(edittextDesc);
+                alert.setView(linearLayout);
                 alert.setPositiveButton("Kaydet", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        ListTypeService.editListType(context,data.getListTypeId(),edittext.getText().toString().trim(),edittextDesc.getText().toString().trim(),activity);
+                        if(editTextName.getText().toString().isEmpty() || editTextDesc.getText().toString().isEmpty()){
+                            new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                                    .setTitleText("Liste Ekleme")
+                                    .setContentText("Liste ismi ve açıklama alanları zorunludur!")
+                                    .show();
+                            return;
+                        }
+                        for(ListTypeData lst:mData){
+                            if(lst.getName().equals(editTextName.getText().toString().trim())){
+                                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                                        .setTitleText("Liste Ekleme")
+                                        .setContentText(editTextName.getText().toString() + ", isimli liste zaten mevcuttur. Lütfen listenizde yer almayan bir isim giriniz")
+                                        .show();
+                                return;
+                            }
+                        }
+                        ListTypeService.editListType(context,data.getListTypeId(),editTextName.getText().toString().trim(),editTextDesc.getText().toString().trim(),activity);
                     }
                 });
 
                 alert.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // what ever you want to do with No option.
-
                     }
                 });
 
                 alert.show();
             }
-
         });
 
         holder.delete.setOnClickListener(new View.OnClickListener(){
@@ -153,4 +175,5 @@ public class ListTypeAdapter extends RecyclerView.Adapter<ListTypeAdapter.ViewHo
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
+
 }

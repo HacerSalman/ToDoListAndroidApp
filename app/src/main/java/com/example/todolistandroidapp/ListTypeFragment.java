@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.todolistandroidapp.Adapter.ListTypeAdapter;
@@ -44,6 +45,7 @@ public class ListTypeFragment extends Fragment {
 
     ListTypeAdapter adapter;
     RecyclerView listTypeRecycleView;
+    List<ListTypeData> list;
 
     public ListTypeFragment() {
         // Required empty public constructor
@@ -114,7 +116,8 @@ public class ListTypeFragment extends Fragment {
                     }
                 }
                 else if(response.body() != null){
-                    setRecycleView(response.body().getList());
+                    list = response.body().getList();
+                    setRecycleView();
                 }
             }
 
@@ -127,7 +130,7 @@ public class ListTypeFragment extends Fragment {
 
     }
 
-    void setRecycleView(List<ListTypeData> list){
+    void setRecycleView(){
         // set up the RecyclerView
         // Lookup the recyclerview in activity layout
         if(list.size() > 0){
@@ -164,19 +167,45 @@ public class ListTypeFragment extends Fragment {
 
         //region show add dialog
         //Show add popup
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        final EditText editTextName = new EditText(getContext());
+        editTextName.setHint("Liste");
+        final EditText editTextDesc = new EditText(getContext());
+        editTextDesc.setHint("Açıklama");
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setLayoutParams(params);
+        linearLayout.addView(editTextName);
+        linearLayout.addView(editTextDesc);
+
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
-        final EditText edittext = new EditText(getContext());
-        edittext.setHint("Liste");
-        final EditText edittextDesc = new EditText(getContext());
-        edittextDesc.setHint("Açıklama");
+
         alert.setTitle("Yeni Liste");
-        //TODO:
-        alert.setView(edittext);
-        alert.setView(edittextDesc);
+        alert.setView(linearLayout);
         alert.setPositiveButton("Kaydet", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                ListTypeService.addListType(getContext(),edittext.getText().toString().trim(),edittextDesc.getText().toString().trim(),getActivity());
+
+                if(editTextName.getText().toString().isEmpty() || editTextDesc.getText().toString().isEmpty()){
+                    new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Liste Ekleme")
+                            .setContentText("Liste ismi ve açıklama alanları zorunludur!")
+                            .show();
+                    return;
+                }
+                for(ListTypeData lst:list){
+                    if(lst.getName().equals(editTextName.getText().toString().trim())){
+                        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("Liste Ekleme")
+                                .setContentText(editTextName.getText().toString() + ", isimli liste zaten mevcuttur. Lütfen listenizde yer almayan bir isim giriniz")
+                                .show();
+                        return;
+                    }
+                }
+
+                ListTypeService.addListType(getContext(),editTextName.getText().toString().trim(),editTextDesc.getText().toString().trim(),getActivity());
             }
         });
 

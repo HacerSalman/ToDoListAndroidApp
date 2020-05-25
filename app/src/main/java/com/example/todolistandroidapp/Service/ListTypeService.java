@@ -6,7 +6,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.widget.Toast;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.todolistandroidapp.ListTypeFragment;
 import com.example.todolistandroidapp.LoginActivity;
+import com.example.todolistandroidapp.MainActivity;
+import com.example.todolistandroidapp.ManageListFragment;
 import com.example.todolistandroidapp.Model.AuthModel;
 import com.example.todolistandroidapp.Model.BaseResponse;
 import com.example.todolistandroidapp.Model.ListRequestModel;
@@ -77,7 +85,12 @@ public class ListTypeService {
                             .setContentText("İşleminiz başarılı bir şekilde gerçekleşmiştir.")
                             .show();
 
-                    //TODO:call get user list type
+                    // Reload current fragment
+                    FragmentTransaction ft =((MainActivity) activity). getSupportFragmentManager().beginTransaction();
+                    ListTypeFragment frg = (ListTypeFragment)((MainActivity) activity). getSupportFragmentManager().getFragments().get(0);
+                    ft.detach(frg);
+                    ft.attach(frg);
+                    ft.commit();
                 }
             }
 
@@ -134,6 +147,12 @@ public class ListTypeService {
                             .setTitleText("İşlem Başarılı")
                             .setContentText("İşleminiz başarılı bir şekilde gerçekleşmiştir.")
                             .show();
+                    // Reload current fragment
+                    FragmentTransaction ft =((MainActivity) activity). getSupportFragmentManager().beginTransaction();
+                    ListTypeFragment frg = (ListTypeFragment)((MainActivity) activity). getSupportFragmentManager().getFragments().get(0);
+                    ft.detach(frg);
+                    ft.attach(frg);
+                    ft.commit();
                 }
             }
 
@@ -191,6 +210,12 @@ public class ListTypeService {
                             .setTitleText("İşlem başarılı")
                             .setContentText("İşleminiz başarıyla gerçekleşmiştir")
                             .show();
+                    // Reload current fragment
+                    FragmentTransaction ft =((MainActivity) activity). getSupportFragmentManager().beginTransaction();
+                    ListTypeFragment frg = (ListTypeFragment)((MainActivity) activity). getSupportFragmentManager().getFragments().get(0);
+                    ft.detach(frg);
+                    ft.attach(frg);
+                    ft.commit();
                 }
             }
             @Override
